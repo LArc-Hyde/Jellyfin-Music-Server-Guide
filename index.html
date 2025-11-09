@@ -41,8 +41,8 @@
 
     <hr>
 
-    <h2>Step 1: Installing the OS on the Rasperry Pi</h2>
-    <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. Please download it.<br><a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager Download</a></p>
+    <h2>Step 1: Installing the OS on the Raspberry Pi</h2>
+    <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. Please download it.<br><a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager Download</a><br>Once you install the Raspberry Pi Imager, connect your SD Card to your computer and launch the imager.  In the imager, select your Raspberry Pi device. We used a Raspberry Pi 5 and selected that.  Then, for Operating System we selected Other General-Purpose OS.  From there we selected Ubuntu.  Then, from the Ubuntu selections, we chose Ubuntu Server 24.04.3 LTS (64-bit).  We suggest using and LTS version of Ubuntu because they get support for longer period of time compared to the regular releases and tend to be more stable.  This project can also work with Ubuntu Desktop, but it is not reccomended since Ubuntu Desktop includes a gui that can slow down the Raspberry Pi. Once the OS has been selected.  Click Choose Storage and select the SD Card.  Yiu should get a pop up saying if you would like to apply OS customization settings.  Click Edit Settings and set a host name, set a username and password.  If you are going to use wifi (wired connection preferred) also configure wireless LAN. Click on Services and enable SSH.  For this project, we used password authentication.  Then click save.  Then click Yes to apply the configuration settings.  Once all that is done, remove your SD card and plug it, into your Raspberry Pi.  Once you power on the Raspberry Pi, it shoudl automatically connect to the internet,</p>
 
     <hr>
 
@@ -50,17 +50,10 @@
         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         <pre><code id="bash-script-1">
 sudo apt update
-sudo apt upgrade -y
+sudo apt full-upgrade -y
         </code></pre>
     </div>
 
-    <p>Here is another script to check disk space:</p>
-    <div class="code-container">
-        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        <pre><code id="bash-script-2">
-df -h
-        </code></pre>
-    </div>
 
     <script src="copy.js"></script> </body>
 </html>
