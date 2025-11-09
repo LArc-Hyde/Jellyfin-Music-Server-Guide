@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linux Bash Instructional Guide</title>
+    <style>
+        /* CSS to position the button */
+        .code-container {
+            position: relative;
+            background: #222;
+            color: #eee;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 5px;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Linux Commands for Beginners</h2>
+    <p>This is the bash script for updating your system:</p>
+
+    <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo apt update
+sudo apt upgrade -y
+        </code></pre>
+    </div>
+
+    <p>Here is another script to check disk space:</p>
+    <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-2">
+df -h
+        </code></pre>
+    </div>
+
+    <script src="copy.js"></script> </body>
+</html>
