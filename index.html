@@ -41,24 +41,57 @@
 
     <hr>
 
-    <h2>Step 1: Installing the OS on the Raspberry Pi</h2>
+    <h2>Step 1:  Installing the OS on the Raspberry Pi</h2>
     <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. </p>
 
-    <h3>A.   Download the Raspberry Pi Imager</h3>
+    <h3>A:   Download the Raspberry Pi Imager</h3>
     <p><a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager Download</a></p>
 
-    <h3>B.   Flash The Raspberry Pi OS</h3>
+    <h3>B:  Flash The Raspberry Pi OS</h3>
     <p>Once you install the Raspberry Pi Imager, connect your SD Card to your computer and launch the imager.  In the imager, select your Raspberry Pi device. We used a Raspberry Pi 5 and selected that.  Then, for Operating System we selected Other General-Purpose OS.  From there we selected Ubuntu.  Then, from the Ubuntu selections, we chose Ubuntu Server 24.04.3 LTS (64-bit).  We suggest using and LTS version of Ubuntu because they get support for longer period of time compared to the regular releases and tend to be more stable.  This project can also work with Ubuntu Desktop, but it is not reccomended since Ubuntu Desktop includes a gui that can slow down the Raspberry Pi. Once the OS has been selected.  Click Choose Storage and select the SD Card.  You should get a pop up saying if you would like to apply OS customization settings.  Click Edit Settings and set a host name, set a username, and set a password.  If you are going to use wifi (wired connection preferred) also configure wireless LAN. Click on Services and enable SSH.  For this project, we used password authentication.  Then click save.  Then click Yes to apply the configuration settings.  Once all that is done, remove your SD card and plug it, into your Raspberry Pi.  Once you power on the Raspberry Pi, it should automatically connect to the internet.</p>
+
+    <h3>C:   Get the External SSD Ready</h3>
+    <p>It is suggested to not use an SD Card for storage for a media server, so therefore, we need to get the ssd ready.  You can always format the ssd while connected to the Pi, however we settled with a GUI to format the External SSD. We used the KDE Partition Manager to change the SSD from exfat to ext4 which is what is reccomended for this.  Then, format the SSD to ext4.</p>
+
 
     <hr>
 
+    <h2>Step 2:  Connecting to the Pi</h2>
+    <p>Connecting to the Pi can different depending on the method or the computer of the user.  We used a computer with  Linux, so we used SSH through a terminal.  A Windows user might need to download extra software like PuTTY.  The rest of the steps will be using for Linux through the terminal.<br><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">PuTTY Download</a></p>
+
+    <h3>A:   Checking SSH</h3>
+    <p>In general, SSH is typically preinstalled on most Linux Distributions.  This is how to check if SSH is installed on Ubuntu.  Install methods can vary distro to distro.  This shoud work with most Ubuntu-based distros. </p>
     <div class="code-container">
         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         <pre><code id="bash-script-1">
-sudo apt update
-sudo apt full-upgrade -y
+ssh -V
         </code></pre>
     </div>
+
+    <h3>B:   Installing SSH</h3>
+    <p>If the previous command shows that SSH is not installed, then use the following command to update the package list and install SSH.  If ssh is installed, you can skip this step.</p>
+
+        <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo apt update
+sudo apt install openssh-client
+        </code></pre>
+    </div>
+
+    <h3>C:   Connecting to the Pi</h3>
+    <p>We will use SSH to connect to the Raspberry Pi.  You will need your username, hostname, and password used when flashing the Raspberry Pi image.  When you type the following command do not include the square brackets and replace username with the username you created and hostname with the on you created.  </p>
+        <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+ssh [username]@[hostname]
+        </code></pre>
+    </div>
+
+    <h3>D:   SSH Authentication</h3>
+    <p>This can vary slightly from distro to distro.  Typically, the first time you connect to a new device through SSH, you'll be asked if you are sure you want to connect.  Type or select yes.  It shoudl prompt you for the user's password.  Once you input that in, it might ask you if you want to save the login information.  That choice is up to you.</p>
+
+    <h2>Getting The Pi Ready</h2>
 
 
     <script src="copy.js"></script> </body>
