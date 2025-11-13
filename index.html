@@ -41,7 +41,7 @@
 
     <hr>
 
-    <h2>Step 1:  Installing the OS on the Raspberry Pi</h2>
+    <h2>Step 1:   Installing the OS on the Raspberry Pi</h2>
     <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. </p>
 
     <h3>A:   Download the Raspberry Pi Imager</h3>
@@ -56,7 +56,7 @@
 
     <hr>
 
-    <h2>Step 2:  Connecting to the Pi</h2>
+    <h2>Step 2:   Connecting to the Pi</h2>
     <p>Connecting to the Pi can different depending on the method or the computer of the user.  We used a computer with  Linux, so we used SSH through a terminal.  A Windows user might need to download extra software like PuTTY.  The rest of the steps will be using for Linux through the terminal.<br><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">PuTTY Download</a></p>
 
     <h3>A:   Checking SSH</h3>
@@ -91,7 +91,41 @@ ssh [username]@[hostname]
     <h3>D:   SSH Authentication</h3>
     <p>This can vary slightly from distro to distro.  Typically, the first time you connect to a new device through SSH, you'll be asked if you are sure you want to connect.  Type or select yes.  It shoudl prompt you for the user's password.  Once you input that in, it might ask you if you want to save the login information.  That choice is up to you.</p>
 
-    <h2>Getting The Pi Ready</h2>
+    <h2>Step 3:   Getting The Pi Ready</h2>
+    <p>This step will mainly be getting the Pi ready to have a music server.  We will go over permissions, where to store music files, and how to automount the ssd.</p>
+
+    <h3>A:   Creating the mount point</h3>
+    <p>The mount point is the location in the server where the harddrive is going to connect.  We are going to use this location to add music files.  We chose  /media/ because based on our expiriences, sometimes Jllyfin has trouble reading the user's home folders.  Feel free to name the directory for the music files anything.  In this guide we named it JellyfinMusic.</p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo mkdir -p /media/JellyfinMusic
+        </code></pre>
+    </div>
+
+    <h3>B:   Creating the media group and adding users</h3>
+    <p>Since /media/JellyfinMusic is located within the system files, we need to give our user special permmisions to freely access this directory.  We will also need to grant Jellyfin this access.  We will create a group to give access to both the user and Jellyfin.  However, Jellyfin will be granted membership to that group once it is installed.  The name of group will be "media".  Input the following commands without the square brackets and replace username with your username.</p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo groupadd media
+sudo usermod -aG [username]
+sudo chown -R [username]:media /media/JellyfinMusic
+sudo chmod -R 775 /media/JellyfinMusic
+        </code></pre>
+    </div>
+
+    <h3>C:   Applying Group Changes</h3>
+    <p>To apply the group changes just log out and log back in.</p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+exit ssh
+ssh [username]@[hostname]
+        </code></pre>
+    </div>
+
+
 
 
     <script src="copy.js"></script> </body>
