@@ -35,14 +35,20 @@
     -Raspberry Pi Power Adapter<br>
     -SD Card (at least 32GB)<br>
     -External Harddrive<br>
-    -Ethernet Cable (CAT5e or CAT6should be fine)<br>
+    -Ethernet Cable (CAT5e or CAT6 should be fine)<br>
     -Seperate Computer <br>
     -Raspberry Pi Case (Optional)</p>
 
     <hr>
 
     <h2>Step 1: Installing the OS on the Raspberry Pi</h2>
-    <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. Please download it.<br><a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager Download</a><br>Once you install the Raspberry Pi Imager, connect your SD Card to your computer and launch the imager.  In the imager, select your Raspberry Pi device. We used a Raspberry Pi 5 and selected that.  Then, for Operating System we selected Other General-Purpose OS.  From there we selected Ubuntu.  Then, from the Ubuntu selections, we chose Ubuntu Server 24.04.3 LTS (64-bit).  We suggest using and LTS version of Ubuntu because they get support for longer period of time compared to the regular releases and tend to be more stable.  This project can also work with Ubuntu Desktop, but it is not reccomended since Ubuntu Desktop includes a gui that can slow down the Raspberry Pi. Once the OS has been selected.  Click Choose Storage and select the SD Card.  Yiu should get a pop up saying if you would like to apply OS customization settings.  Click Edit Settings and set a host name, set a username and password.  If you are going to use wifi (wired connection preferred) also configure wireless LAN. Click on Services and enable SSH.  For this project, we used password authentication.  Then click save.  Then click Yes to apply the configuration settings.  Once all that is done, remove your SD card and plug it, into your Raspberry Pi.  Once you power on the Raspberry Pi, it shoudl automatically connect to the internet,</p>
+    <p>For this guide we used Ubuntu Server 24.04.3 LTS.  Other operating systems might use slightly different commands so please research if you have something else installed. <br>You will need to download the Raspberry Pi Imager from the Raspberry Pi website. </p>
+
+    <h3>A.   Download the Raspberry Pi Imager</h3>
+    <p><a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager Download</a></p>
+
+    <h3>B.   Flash The Raspberry Pi OS</h3>
+    <p>Once you install the Raspberry Pi Imager, connect your SD Card to your computer and launch the imager.  In the imager, select your Raspberry Pi device. We used a Raspberry Pi 5 and selected that.  Then, for Operating System we selected Other General-Purpose OS.  From there we selected Ubuntu.  Then, from the Ubuntu selections, we chose Ubuntu Server 24.04.3 LTS (64-bit).  We suggest using and LTS version of Ubuntu because they get support for longer period of time compared to the regular releases and tend to be more stable.  This project can also work with Ubuntu Desktop, but it is not reccomended since Ubuntu Desktop includes a gui that can slow down the Raspberry Pi. Once the OS has been selected.  Click Choose Storage and select the SD Card.  You should get a pop up saying if you would like to apply OS customization settings.  Click Edit Settings and set a host name, set a username, and set a password.  If you are going to use wifi (wired connection preferred) also configure wireless LAN. Click on Services and enable SSH.  For this project, we used password authentication.  Then click save.  Then click Yes to apply the configuration settings.  Once all that is done, remove your SD card and plug it, into your Raspberry Pi.  Once you power on the Raspberry Pi, it should automatically connect to the internet.</p>
 
     <hr>
 
