@@ -125,6 +125,68 @@ ssh [username]@[hostname]
         </code></pre>
     </div>
 
+        <h3>D:   Automounting the External Drive</h3>
+    <p>If you haven't already connect the external harddrive to a USB 3.0 port.  Then type the following and copy the UUID for your external harddrive.  It should be listed as something similiar to /dev/sda1. </p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo blkid
+        </code></pre>
+    </div>
+        <p>Now we have to edit fstab to add the the drive to the correct mounting point.  Add the following line to the end of the file without square brackets and with your UUID for your external drive and the name of your music folder.  To save and exit type Ctrl+O, then Enter, and then Ctrl+X.</p>
+            <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+UUID=[YOUR_UUID] /media/[YOUR_MUSIC_FOLDER_NAME] ext4 defaults,nofail 0 0
+        </code></pre>
+    </div>
+        <p>Now apply changes by typing the following:</p>
+            <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo mount -a
+        </code></pre>
+    </div>
+
+    <h2>Step 4: Setting Up Jellyfin</h4>
+    <h3>A: Installing Jellyfin</h3>
+    <p>We need to install curl so we can use the official Ubuntu installation script.</p>
+     <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo apt install curl
+curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash
+        </code></pre>
+    </div>
+
+    <h3>B: Configuring Jellyfin Permmisions</h3>
+    <p>We need to give Jellyfin the correct permmisions to have acces to our music folder in /media/ adn we can do that by adding Jellyfin to our media group.</p>
+     <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo usermod -aG media jellyfin
+sudo systemctl restart jellyfin
+        </code></pre>
+    </div>
+
+        <h3>C: Jellyfin Setup</h3>
+    <p>Copy the following command to find your ip address.</p>
+     <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+ip a
+        </code></pre>
+    </div>
+      <p>Once you find your ip address copy it into your actual computer (not the Pi) in the following format to a web browser.  The Jellyfin setup wizard should appear.  Follow the instructions and do not forget to add your music folder in /media/[YOUR_MUSIC_FOLDER_NAME] into the Jellyfin wizard.</p>
+     <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+http://[RasperryPi_IP_Address]:8096
+        </code></pre>
+    </div>
+
+    <h2>Step 5:  Setting Up Remote Access</h2>
+
 
 
 
