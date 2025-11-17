@@ -28,7 +28,7 @@
 <body>
 
     <h1>Guide:  Jellyfin Music Server</h1>
-    <p>In this guide, we will go over how to set up a Jellyfin Music Server using a Raspberry Pi:</p>
+    <p>In this guide, we will go over how to set up a Jellyfin Music Server using a Raspberry Pi.  The idea is to basically have your own version of a streaming service using your own music files.  We will go through the process of getting a phone ready to connect to the server remotely.</p>
 
     <h2>Prerequisites</h2>
     <p>-Raspberry Pi (we used a Pi 5 4GB RAM) <br>
@@ -181,13 +181,90 @@ ip a
      <div class="code-container">
         <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         <pre><code id="bash-script-1">
-http://[RasperryPi_IP_Address]:8096
+http://[RaspberryPi_IP_Address]:8096
         </code></pre>
     </div>
 
     <h2>Step 5:  Setting Up Remote Access</h2>
+    <p>So at this point our server works locally.  It works while you're in the same network as the server.  However, if we are going to use this as a streaming service, we need to be able to access our server no matter how far away we are.  For this solution, we used Tailscale.  Tailscale is a VPN service that allows for easy connections of multiple devices. You are going to need to make a Tailscale account. </p>
 
+    <h3>A: Create a Tailscale Account</h3>
+  <p>You are going to need to make a Tailscale account.  Follow the link and make your<a href="https://tailscale.com/">Tailscale</a>  account.  Once you make an account, go a ahead and execute the following command into the terminal to download and configure Tailscale on the server.</p>
+         <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+curl -fsSL https://tailscale.com/install.sh | sh
+        </code></pre>
+    </div>
 
+        <h3>B:  Linking The Server to Tailscale</h3>
+     <p>Copy the link that the server creates once installing Tailscale.  Paste the link into your actual computer's internet browser.  Once you log into Tailscale.  If it didn't automatically add your server, then in the admin dashboard, select add a device (top right) and follow the setup to add your server.  Once that is done, your server should be ready to handle remote access.</p>
+
+     <h3>C:  Providing Server Access to your phone.</h3>
+     <p>  You will need to download and install Tailscale on your phone and set that up there as well so that your phone is in the same network as a server.  Once that is set up, you will also need to download Finamp or any other Jellyfin client.  We reccomend Jellyfin because it provides a simple interface that is optimized for playing audio files.  Once you install Jellyfin you should get a login screen.  For your login use the username, you made on your Jellyfin server and use that same password.  Then, the ip would be your Tailscale ip address.  Use the following format. </p>
+        <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+http://[Tailscale_IP_Address_]:8096
+        </code></pre>
+    </div>
+
+    <h2>Step 6:  Adding Music Files</h2>
+    <p>I will go over two methods of adding music to ther server.  Ther first one works best on Linux-based computers since they usually have SFTP compatibility in their file managers.  The second method is more common method of setting up network shares for cross-compatibilty with Windows and Linux computers.</p>
+
+    <h3>Method A: Adding Music Through SFTP</h3>
+    <p>This method works best if you have use a linux distro as a your regular computer since most modern file managers will have built in support for sftp.  Since we already have access to ssh, sftp should work without any set up.  Simply open your file manager and type the following in the address bar.  If you want access to the server only while you are in your local network, use your server's local ip address.  If you also want remote access, feel then you can use the Tailscale ip address for the server.  Once connected, remmeber that the music folder is located in /media/[The_name_you chose].  Then, you can just click and drag files.  If you wish to use sftp in Windows, you will need to install and sftp client like WinSCP or FileZilla</p>
+       <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sftp://[IP address]
+        </code></pre>
+    </div>
+
+    <h3>Method B: File Share Through SMB</h3>
+    <p>This next method works with both Windows and Linux. First we need to install Samba which will handle our Network Share</p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+sudo apt install samba
+        </code></pre>
+    </div>
+	<p>Then we need to set up a password for samba.  Replace [user] with the username you use for ssh</p>
+	       <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+        sudo smbpasswd -a [user]
+        </code></pre>
+    </div>
+    <p>Then, we need to edit the Samba Config File.</p>
+           <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+        sudo nano /etc/samba/smb.conf
+        </code></pre>
+    </div>
+    <p>Add the following text to the bottom of the file.  The first line needs one set of square brackets.  For the other lines, remove the square brackets.</p>
+        	<div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+        [[The_name_for_your_Shared_folder]] 
+        comment = Jellyfin Music Share 
+        path = /media/[Your_Music_Folder_Name]
+        browseable = yes 
+        writable = yes 
+        valid users = [your_username_used_for_ssh]
+        create mask = 0664 
+        directory mask = 0775 
+        public = no
+        </code></pre>
+    </div>
+    <p>Then restart Samba to apply changes</p>
+         <div class="code-container">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code id="bash-script-1">
+        sudo systemctl restart smbd
+        </code></pre>
+    </div>
 
 
     <script src="copy.js"></script> </body>
